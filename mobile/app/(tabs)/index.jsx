@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  TouchableOpacity,
   FlatList,
   ActivityIndicator,
   RefreshControl,
@@ -18,7 +17,7 @@ import { formatPublishDate } from "../../lib/utils";
 import COLORS from "../../constants/colors";
 import Loader from "../../components/Loader";
 
-export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 export default function Home() {
   const { token } = useAuthStore();
@@ -38,7 +37,8 @@ export default function Home() {
       });
 
       const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "Failed to fetch books");
+      if (!response.ok)
+        throw new Error(data.message || "Failed to fetch books");
 
       // todo fix it later
       // setBooks((prevBooks) => [...prevBooks, ...data.books]);
@@ -46,8 +46,10 @@ export default function Home() {
       const uniqueBooks =
         refresh || pageNum === 1
           ? data.books
-          : Array.from(new Set([...books, ...data.books].map((book) => book._id))).map((id) =>
-              [...books, ...data.books].find((book) => book._id === id)
+          : Array.from(
+              new Set([...books, ...data.books].map(book => book._id))
+            ).map(id =>
+              [...books, ...data.books].find(book => book._id === id)
             );
 
       setBooks(uniqueBooks);
@@ -78,25 +80,36 @@ export default function Home() {
     <View style={styles.bookCard}>
       <View style={styles.bookHeader}>
         <View style={styles.userInfo}>
-          <Image source={{ uri: item.user.profileImage }} style={styles.avatar} />
+          <Image
+            source={{ uri: item.user.profileImage }}
+            style={styles.avatar}
+          />
           <Text style={styles.username}>{item.user.username}</Text>
         </View>
       </View>
 
       <View style={styles.bookImageContainer}>
-        <Image source={item.image} style={styles.bookImage} contentFit="cover" />
+        <Image
+          source={item.image}
+          style={styles.bookImage}
+          contentFit="cover"
+        />
       </View>
 
       <View style={styles.bookDetails}>
         <Text style={styles.bookTitle}>{item.title}</Text>
-        <View style={styles.ratingContainer}>{renderRatingStars(item.rating)}</View>
+        <View style={styles.ratingContainer}>
+          {renderRatingStars(item.rating)}
+        </View>
         <Text style={styles.caption}>{item.caption}</Text>
-        <Text style={styles.date}>Shared on {formatPublishDate(item.createdAt)}</Text>
+        <Text style={styles.date}>
+          Shared on {formatPublishDate(item.createdAt)}
+        </Text>
       </View>
     </View>
   );
 
-  const renderRatingStars = (rating) => {
+  const renderRatingStars = rating => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
       stars.push(
@@ -119,7 +132,7 @@ export default function Home() {
       <FlatList
         data={books}
         renderItem={renderItem}
-        keyExtractor={(item) => item._id}
+        keyExtractor={item => item._id}
         contentContainerStyle={styles.listContainer}
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -134,20 +147,32 @@ export default function Home() {
         onEndReachedThreshold={0.1}
         ListHeaderComponent={
           <View style={styles.header}>
-            <Text style={styles.headerTitle}>BookWorm 🐛</Text>
-            <Text style={styles.headerSubtitle}>Discover great reads from the community👇</Text>
+            <Text style={styles.headerTitle}>⋆✩ I Love Books ✩⋆</Text>
+            <Text style={styles.headerSubtitle}>
+              Discover great reads from the community👇
+            </Text>
           </View>
         }
         ListFooterComponent={
           hasMore && books.length > 0 ? (
-            <ActivityIndicator style={styles.footerLoader} size="small" color={COLORS.primary} />
+            <ActivityIndicator
+              style={styles.footerLoader}
+              size="small"
+              color={COLORS.primary}
+            />
           ) : null
         }
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Ionicons name="book-outline" size={60} color={COLORS.textSecondary} />
+            <Ionicons
+              name="book-outline"
+              size={60}
+              color={COLORS.textSecondary}
+            />
             <Text style={styles.emptyText}>No recommendations yet</Text>
-            <Text style={styles.emptySubtext}>Be the first to share a book!</Text>
+            <Text style={styles.emptySubtext}>
+              Be the first to share a book!
+            </Text>
           </View>
         }
       />

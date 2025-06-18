@@ -40,7 +40,7 @@ export default function Signup() {
         <View style={styles.card}>
           {/* HEADER */}
           <View style={styles.header}>
-            <Text style={styles.title}>BookWorm🐛</Text>
+            <Text style={styles.title}>⋆✩ I Love Books ✩⋆</Text>
             <Text style={styles.subtitle}>Share your favorite reads</Text>
           </View>
 
@@ -120,7 +120,11 @@ export default function Signup() {
             </View>
 
             {/* SIGNUP BUTTON */}
-            <TouchableOpacity style={styles.button} onPress={handleSignUp} disabled={isLoading}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleSignUp}
+              disabled={isLoading}
+            >
               {isLoading ? (
                 <ActivityIndicator color="#fff" />
               ) : (
