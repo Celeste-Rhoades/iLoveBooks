@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { API_URL } from "../../../../coding/iLoveBooks/mobile/constants/api";
+import { API_URL } from "../constants/api";
 
-export const useAuthStore = create(set => ({
+export const useAuthStore = create((set) => ({
   user: null,
   token: null,
   isLoading: false,
